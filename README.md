@@ -1,7 +1,7 @@
 What you need:
- * Github desktop
- * Visual Studio code
- * nodejs
+ * Github desktop https://desktop.github.com/
+ * Visual Studio code https://code.visualstudio.com/
+ * nodejs https://nodejs.org/en/
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
