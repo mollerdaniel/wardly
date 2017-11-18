@@ -11,6 +11,9 @@ What you need:
  5. install visual studio code
  6. continue with the stuff below
 
+ If necessary, configure visual studio code if it complains about not being able to find 'git':
+ 1. open settings (ctrl+shift+p type 'settings') and open user settings, search for 'gitcommand' and click the edit icon next to it, then paste the path to git, something like: "C:/Users/<your user>/AppData/Local/GitHubDesktop/app-1.0.9/resources/app/git/mingw64/bin/git.exe"
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
