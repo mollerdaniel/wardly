@@ -2,6 +2,14 @@ What you need:
  * Github desktop https://desktop.github.com/
  * Visual Studio code https://code.visualstudio.com/
  * nodejs https://nodejs.org/en/
+ 
+ Quick start thing (I /think/ this will work):
+ 1. download github desktop
+ 2. clone this repo (green button, open in github desktop)
+ 3. install nodejs
+ 4. open a terminal, navigate to the folder where you saved the code, run npm install
+ 5. install visual studio code
+ 6. continue with the stuff below
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
