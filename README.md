@@ -13,6 +13,8 @@ What you need:
 
  If necessary, configure visual studio code if it complains about not being able to find 'git':
  1. open settings (ctrl+shift+p type 'settings') and open user settings, search for 'gitcommand' and click the edit icon next to it, then paste the path to git, something like: "C:/Users/<your user>/AppData/Local/GitHubDesktop/app-1.0.9/resources/app/git/mingw64/bin/git.exe"
+ 
+Finally, for the hot reloading etc in the Expo app, you might have to open up for nodejs in the windows firewall, open firewall settings and allow nodejs on private networks, then make sure your phone is on wifi same as your PC and then it should work!
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
