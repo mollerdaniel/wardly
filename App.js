@@ -1,23 +1,48 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+
+class BackgroundImage extends React.Component {
+  render() {
+      return (
+          <Image source={require('./backgroundimage.jpg')}
+                style={styles.backgroundImage}>
+
+                {this.props.children}
+
+          </Image>
+      );
+  }
+}
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <BackgroundImage>
+        <Text style={styles.normalText}>TEST</Text>
+      </BackgroundImage>
     );
   }
 }
 
+const resizeMode = 'contain';
+const dimensions = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: null,
+    height: null,
+    resizeMode: 'cover',
   },
+  csgologoImage: {
+    width: Math.round(dimensions.width * 0.75),
+    height: 200,
+    resizeMode: 'contain',
+  },
+  normalText: {
+      textAlign: 'center',
+      color: 'white',
+      backgroundColor: 'rgba(0,0,0,0)',
+      fontSize: 20,
+  }
 });
