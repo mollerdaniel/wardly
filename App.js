@@ -16,6 +16,7 @@ export default class App extends React.Component {
 
   render() {
     return (
+      //TEST 1213
       <BackgroundImage>
         <View style={styles.buttonContainer}>
           <View style={styles.countContainer}>
