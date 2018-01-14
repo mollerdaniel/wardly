@@ -1,23 +1,11 @@
 import React from 'react';
-import { Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
-
-class BackgroundImage extends React.Component {
-  render() {
-      return (
-          <Image source={require('./images/backgroundimage.jpg')}
-                style={styles.backgroundImage}>
-
-                {this.props.children}
-
-          </Image>
-      );
-  }
-}
+import {Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import BackgroundImage from './common/BackgroundImage/';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { count: 0 }
+    this.state = {count: 0}
   }
 
   onPress = () => {
@@ -62,14 +50,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flexDirection: 'column',
     marginBottom: '20%',
-  },
-  backgroundImage: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: dimensions.width,
-    height: dimensions.height,
-    resizeMode: 'cover'
   },
   csgologoImage: {
     width: dimensions.width * 0.75,
