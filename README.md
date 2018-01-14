@@ -5,7 +5,8 @@ What you need:
  
  Quick start thing (I /think/ this will work):
  1. download github desktop
- 2. clone this repo (green button, open in github desktop)
+ 2a. Fork this repo.
+ 2b. clone the forked repo (green button, open in github desktop)
  3. install nodejs
  4. open a terminal, navigate to the folder where you saved the code, run npm install
  5. install visual studio code
