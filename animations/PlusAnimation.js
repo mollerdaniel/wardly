@@ -16,7 +16,7 @@ export default class PlusAnimation extends React.Component {
         }}
         style={{width: 24, height: 24, marginTop: 5}}
         loop={true}
-        source={require('./plusAnimationData.json')}
+        source={require('./fatPlus.json')}
       />
     );
   }
