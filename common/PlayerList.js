@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
     },
     scrollArea: {
        maxHeight: 120,
+       backgroundColor: 'rgba(0,0,0,0)'
     }
 })
