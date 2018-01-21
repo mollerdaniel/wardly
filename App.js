@@ -2,6 +2,7 @@ import React from 'react'
 import { Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import BackgroundImage from './common/BackgroundImage/'
 import { getAvailablePlayers } from './services/dataHandler'
+import ReadyCheck from './common/ReadyCheck'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,20 +24,24 @@ export default class App extends React.Component {
       players: players
     })
   }
-
   onPress = () => {
     this.setState({
       count: this.state.count + 1
     })
   }
 
+  countPlayersMax(count) {
+    return count > 5 ? 5 : count
+  }
+
   render() {
     return (
-      //TEST 1213
+      //TEST LIVE VIEW
       <BackgroundImage>
+
         <View style={styles.buttonContainer}>
           <View style={styles.countContainer}>
-            <Text style={styles.countText}> {this.state.players} / 5 players </Text>
+          <Text style={styles.countText}> {this.countPlayersMax(this.state.players)} / 5 players </Text>
           </View>
           <TouchableHighlight style={styles.buttonBlue} onPress={this.onPress}>
             <Text style={styles.whiteText}> +1 CS:GO </Text>
@@ -50,6 +55,9 @@ export default class App extends React.Component {
           source={require('./images/csgologo.png')}
           style={styles.csgologoImage}>
         </Image>
+
+        <ReadyCheck>
+        </ReadyCheck>
 
       </BackgroundImage>
     );
