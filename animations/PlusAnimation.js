@@ -1,5 +1,6 @@
-import React from 'react';
-import LottieView from 'lottie-react-native';
+import React from 'react'
+import LottieView from 'lottie-react-native'
+import StyleSheet from 'react-native'
 
 export default class PlusAnimation extends React.Component {
   componentDidMount() {
@@ -14,9 +15,9 @@ export default class PlusAnimation extends React.Component {
         ref={animation => {
           this.animation = animation;
         }}
-        style={{width: 24, height: 24, marginTop: 5}}
         loop={true}
-        source={require('./fatPlus.json')}
+        style={{ width: 30, height: 30 }}
+        source={require('./fancyPlus.json')}
       />
     );
   }
