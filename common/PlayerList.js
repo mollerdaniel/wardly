@@ -7,7 +7,6 @@ export default class PlayerList extends React.Component {
         this.state = {
           names: props.players
         }
-        console.log('got players', props)
     }
 
     componentWillReceiveProps(nextProps) {
