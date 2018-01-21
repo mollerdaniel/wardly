@@ -3,6 +3,7 @@ import { Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight,
 import BackgroundImage from './common/BackgroundImage/'
 import { getAvailablePlayers } from './services/dataHandler'
 import ReadyCheck from './common/ReadyCheck'
+import PlusAnimation from './animations/PlusAnimation'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -43,8 +44,13 @@ export default class App extends React.Component {
           <View style={styles.countContainer}>
           <Text style={styles.countText}> {this.countPlayersMax(this.state.players)} / 5 players </Text>
           </View>
+          
           <TouchableHighlight style={styles.buttonBlue} onPress={this.onPress}>
-            <Text style={styles.whiteText}> +1 CS:GO </Text>
+
+          <View style={{flexDirection: 'row'}}>
+            <PlusAnimation />
+            <Text style={styles.whiteText}>1 CS:GO</Text>
+          </View>
           </TouchableHighlight>
           <TouchableHighlight style={styles.buttonYellow}>
             <Text style={styles.blackText}> Settings </Text>
@@ -86,7 +92,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     backgroundColor: 'rgba(0,0,0,0)',
-    fontSize: 15,
+    textShadowColor: 'rgba(1,1,1,1)',
+    textShadowOffset: {width: 1, height: 1},
+    fontSize: 22,
   },
   blackText: {
     textAlign: 'center',
