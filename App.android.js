@@ -15,7 +15,7 @@ export default class App extends React.Component {
           <StartView />
         </View>
         <View style={{alignItems: 'center'}} key="3">
-          <Text>First page</Text>
+          <Text>Last page</Text>
         </View>
       </ViewPagerAndroid>
     )
