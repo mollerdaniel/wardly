@@ -1,5 +1,5 @@
-import React from 'react';
-import {Dimensions, Image, StyleSheet} from 'react-native';
+import React from 'react'
+import {Dimensions, Image, StyleSheet} from 'react-native'
 
 export default class BackgroundImage extends React.Component {
     render() {
@@ -8,11 +8,11 @@ export default class BackgroundImage extends React.Component {
                 style={styles.backgroundImage}>
                 {this.props.children}
             </Image>
-        );
+        )
     }
 }
 
-const dimensions = Dimensions.get('window');
+const dimensions = Dimensions.get('window')
 
 const styles = StyleSheet.create({
 backgroundImage: {
@@ -23,4 +23,4 @@ backgroundImage: {
     height: dimensions.height,
     resizeMode: 'cover'
   },
-});
+})
