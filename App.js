@@ -9,8 +9,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      count: 0,
-      players: 0
+      count: 0
     }
   }
 
@@ -22,7 +21,7 @@ export default class App extends React.Component {
     const players = await getAvailablePlayers()
 
     this.setState({
-      players: players
+      count: players
     })
   }
   onPress = () => {
@@ -42,7 +41,7 @@ export default class App extends React.Component {
 
         <View style={styles.buttonContainer}>
           <View style={styles.countContainer}>
-          <Text style={styles.countText}> {this.countPlayersMax(this.state.players)} / 5 players </Text>
+          <Text style={styles.countText}> {this.countPlayersMax(this.state.count)} / 5 players </Text>
           </View>
           
           <TouchableHighlight style={styles.buttonBlue} onPress={this.onPress}>
