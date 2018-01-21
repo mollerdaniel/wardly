@@ -1,52 +1,77 @@
-import React from 'react';
-import {Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
-import BackgroundImage from './common/BackgroundImage/';
-import PlusAnimation from './animations/PlusAnimation';
+import React from 'react'
+import { Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
+import BackgroundImage from './common/BackgroundImage/'
+import { getAvailablePlayers } from './services/dataHandler'
+import ReadyCheck from './common/ReadyCheck'
+import PlusAnimation from './animations/PlusAnimation'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {count: 0}
+    this.state = {
+      count: 0,
+      players: 0
+    }
   }
 
+  componentDidMount() {
+    this.fetchData().done()
+  }
+
+  async fetchData() {
+    const players = await getAvailablePlayers()
+
+    this.setState({
+      players: players
+    })
+  }
   onPress = () => {
     this.setState({
-      count: this.state.count+1
+      count: this.state.count + 1
     })
+  }
+
+  countPlayersMax(count) {
+    return count > 5 ? 5 : count
   }
 
   render() {
     return (
-      //TEST 1213
+      //TEST LIVE VIEW
       <BackgroundImage>
+
         <View style={styles.buttonContainer}>
           <View style={styles.countContainer}>
-          <Text style={styles.countText}> {this.state.count} / 5 players </Text>
+          <Text style={styles.countText}> {this.countPlayersMax(this.state.players)} / 5 players </Text>
           </View>
           
           <TouchableHighlight style={styles.buttonBlue} onPress={this.onPress}>
+
           <View style={{flexDirection: 'row'}}>
             <PlusAnimation />
             <Text style={styles.whiteText}>1 CS:GO</Text>
           </View>
           </TouchableHighlight>
           <TouchableHighlight style={styles.buttonYellow}>
-          <Text style={styles.blackText}> Settings </Text>
+            <Text style={styles.blackText}> Settings </Text>
           </TouchableHighlight>
         </View>
-        
+
         <Image
-        source={require('./images/csgologo.png')}
-        style={styles.csgologoImage}>
+          source={require('./images/csgologo.png')}
+          style={styles.csgologoImage}>
         </Image>
+
+        <ReadyCheck>
+        </ReadyCheck>
 
       </BackgroundImage>
     );
   }
 }
 
-const resizeMode = 'contain';
-const dimensions = Dimensions.get('window');
+const resizeMode = 'contain'
+const dimensions = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -76,7 +101,7 @@ const styles = StyleSheet.create({
     color: 'black',
     backgroundColor: 'rgba(0,0,0,0)',
     fontSize: 15,
-  },  
+  },
   buttonBlue: {
     alignItems: 'center',
     backgroundColor: '#5CC8FF',
@@ -103,4 +128,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 30,
   }
-});
+})
