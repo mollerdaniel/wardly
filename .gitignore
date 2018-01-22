@@ -62,3 +62,7 @@ node_modules
 
 /coverage
 /third-party
+*.bundle
+*.meta
+android/app/src/main/res/drawable-mdpi/images_backgroundimage.jpg
+android/app/src/main/res/drawable-mdpi/images_csgologo.png
