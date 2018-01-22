@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     countContainer: {
         flex: 1,
-        padding: 10,
+        paddingBottom: 30,
         alignItems: 'center'
     },
     countText: {
