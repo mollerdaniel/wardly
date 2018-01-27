@@ -57,7 +57,7 @@ export default class StartView extends React.Component {
                             <TouchableHighlight style={styles.buttonBlue} onPress={this.onPress}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <PlusAnimation />
-                                    <Text style={styles.whiteText}>1 CS:GO</Text>
+                                    <Text style={styles.whiteText}> 1 CS:GO</Text>
                                 </View>
                             </TouchableHighlight>
 
@@ -100,9 +100,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         backgroundColor: 'rgba(0,0,0,0)',
-        textShadowColor: 'rgba(1,1,1,1)',
-        textShadowOffset: { width: 1, height: 1 },
-        fontSize: 22,
+        fontSize: 20,
     },
     blackText: {
         textAlign: 'center',
