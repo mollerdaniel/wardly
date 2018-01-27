@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import BackgroundImage from '../common/BackgroundImage/'
-import { getAvailablePlayers } from '../services/dataHandler'
+import { getAvailablePlayers, addMeToList } from '../services/dataHandler'
 import ReadyCheck from '../common/ReadyCheck'
 import PlusAnimation from '../animations/PlusAnimation'
 import PlayerList from '../common/PlayerList'
@@ -19,18 +19,31 @@ export default class StartView extends React.Component {
         this.fetchData().done()
     }
 
+    async addMeToList() {
+        if (this.state.count >= 5) {
+            Alert.alert('Kön är full :D')
+        } else {
+            await addMeToList()
+            this.fetchData()
+        }
+    }
+
+    buttonStyle() {
+        if (this.state.count >= 5) {
+            return styles.buttonGray
+        }
+        return styles.buttonBlue
+    }
+
     async fetchData() {
         const players = await getAvailablePlayers()
-
         this.setState({
             count: players.length,
             names: players
         })
     }
     onPress = () => {
-        this.setState({
-            count: this.state.count + 1
-        })
+        this.addMeToList()
     }
 
     countPlayersMax(count) {
@@ -54,7 +67,7 @@ export default class StartView extends React.Component {
                             <PlayerList players={this.state.names} />
                         </View>
                         <View style={{flex: 1}}>
-                            <TouchableHighlight style={styles.buttonBlue} onPress={this.onPress}>
+                            <TouchableHighlight style={this.buttonStyle()} onPress={this.onPress}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <PlusAnimation />
                                     <Text style={styles.whiteText}> 1 CS:GO</Text>
@@ -100,7 +113,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         backgroundColor: 'rgba(0,0,0,0)',
-        fontSize: 20,
+        textShadowColor: 'rgba(1,1,1,1)',
+        textShadowOffset: { width: 1, height: 1 },
+        fontSize: 22,
     },
     blackText: {
         textAlign: 'center',
@@ -111,6 +126,13 @@ const styles = StyleSheet.create({
     buttonBlue: {
         alignItems: 'center',
         backgroundColor: '#5CC8FF',
+        padding: 10,
+        marginBottom: 20,
+        width: 150,
+    },
+    buttonGray: {
+        alignItems: 'center',
+        backgroundColor: '#C0C0C0',
         padding: 10,
         marginBottom: 20,
         width: 150,
