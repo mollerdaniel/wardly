@@ -1,3 +1,5 @@
+import getMockEvent from './mockEvents'
+
 let fakeDb = {players: []}
 let fakePlayerNames = ['Callisto', 'Lotus', 'inS', 'sommie', 'dmlr_']
 
@@ -20,4 +22,8 @@ export function fakeDbGetPlayers() {
 export function fakeDbAddMe() {
 	let name = randomName()
 	fakeDb.players.push(name)
-} 
+}
+
+export function getEvents() {
+	return getMockEvent()
+}
