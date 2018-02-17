@@ -1,12 +1,7 @@
 import React from 'react'
 import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
 import BackgroundImage from '../common/BackgroundImage'
-import {setUsername, setPassword} from '../services/dataHandler'
-
-
-
-
-
+import { setUsername, setPassword } from '../services/dataHandler'
 
 export default class SettingsView extends React.Component {
     constructor(props) {
@@ -18,12 +13,10 @@ export default class SettingsView extends React.Component {
     }
 
     onLogin = () => {
-         setUsername(this.state.username)
-        }
-    
+        setUsername(this.state.username)
+    }
 
     render() {
-
         return (
             <BackgroundImage>
                 <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'column' }}>
@@ -32,7 +25,7 @@ export default class SettingsView extends React.Component {
 
                     <View style={styles.container}>
                         <TextInput
-                            style={{  flexDirection:'column',height: 40, width: 200, borderColor: 'gray', borderWidth: 2 }}
+                            style={{ flexDirection: 'column', height: 40, width: 200, borderColor: 'gray', borderWidth: 2 }}
                             onChangeText={(username) => this.setState({ username })}
                             clearTextOnFocus
                             value={this.state.username}
@@ -41,7 +34,7 @@ export default class SettingsView extends React.Component {
                     <Text style={styles.infoText}> Discord Password:</Text>
                     <View style={styles.container}>
                         <TextInput
-                            style={{ height: 40, width:200, borderColor: 'gray', borderWidth: 1 }}
+                            style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1 }}
                             onChangeText={(password) => this.setState({ password })}
                             secureTextEntry
                             clearTextOnFocus
@@ -70,17 +63,17 @@ const styles = StyleSheet.create({
     },
     container: {
         justifyContent: 'center',
-        marginBottom:30,
+        marginBottom: 30,
         backgroundColor: '#ffffff',
     },
     infoText: {
-        marginRight:70,
+        marginRight: 70,
         textAlign: 'left',
         color: 'white',
         backgroundColor: 'rgba(0,0,0,0)',
         textShadowColor: 'rgba(1,1,1,1)',
         textShadowOffset: { width: 1, height: 1 },
-        fontSize: 15, 
+        fontSize: 15,
     },
     whiteText: {
         textAlign: 'center',
