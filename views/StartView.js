@@ -5,6 +5,7 @@ import { getAvailablePlayers, addMeToList } from '../services/dataHandler'
 import ReadyCheck from '../common/ReadyCheck'
 import PlusAnimation from '../animations/PlusAnimation'
 import PlayerList from '../common/PlayerList'
+import NavBar from '../common/NavigationBar'
 
 export default class StartView extends React.Component {
     constructor(props) {
@@ -53,11 +54,9 @@ export default class StartView extends React.Component {
     render() {
         return (
             <BackgroundImage>
+                <NavBar title={'This is an injected prop'} leftButtonConfig={{title: 'Back', handler: () => Alert.alert('this is where we should change view') }}/>
                 <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column'}}>
                 {/* Container for players & buttons */}
-                    <View style={{flex: 1}}/>
-                    
-
                     <View style={{flex: 2}}>
                         <View style={styles.countContainer}>
                             
