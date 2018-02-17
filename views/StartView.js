@@ -74,7 +74,7 @@ export default class StartView extends React.Component {
                                 </View>
                             </TouchableHighlight>
 
-                            <TouchableHighlight style={styles.buttonYellow}>
+                            <TouchableHighlight style={styles.buttonYellow} onPress={this.props.onPressFunction}>
                                 <Text style={styles.blackText}> Settings </Text>
                             </TouchableHighlight>
                         </View>
