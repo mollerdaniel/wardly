@@ -1,12 +1,12 @@
 import getMockEvent from './mockEvents'
 
-let fakeDb = {players: []}
-let userName= '123'
-let password= 'null'
-let fakePlayerNames = [userName, 'Callisto', 'Lotus', 'inS', 'sommie', ]
+let fakeDb = { players: [] }
+let userName = '123'
+let password = 'null'
+let fakePlayerNames = [userName, 'Callisto', 'Lotus', 'inS', 'sommie',]
 
 export function getAvailablePlayers() {
-    return fakeDbGetPlayers()
+	return fakeDbGetPlayers()
 }
 
 function randomName() {
@@ -29,12 +29,12 @@ export function fakeDbAddMe() {
 export function getEvents() {
 	return getMockEvent()
 }
-export function setUsername(user){
-	userName =user
-	fakePlayerNames = [userName, 'Callisto', 'Lotus', 'inS', 'sommie', ]
+export function setUsername(user) {
+	userName = user
+	fakePlayerNames = [userName, 'Callisto', 'Lotus', 'inS', 'sommie',]
 
 }
-export function setPassword(pass){
-password =pass
-	
+export function setPassword(pass) {
+	password = pass
+
 }
