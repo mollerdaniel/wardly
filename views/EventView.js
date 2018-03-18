@@ -41,10 +41,6 @@ export default class EventView extends React.Component {
              case tomorrow.getDate() === date.getDate():
              timeString = 'Imorgon ' + date.toLocaleTimeString('sv-SE')
              break;
-            // Om det är mer än 24 h kvar:
-            case timeDiff > twentyFourHours:
-              timeString = date.toLocaleDateString('sv-SE', {weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric'}) + ' ' + date.toLocaleTimeString('sv-SE') + ''
-              break;
             default:
               timeString = date.toLocaleDateString('sv-SE', {weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric'}) + ' ' + date.toLocaleTimeString('sv-SE') + ''
           }
