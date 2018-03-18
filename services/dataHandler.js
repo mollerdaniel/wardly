@@ -1,12 +1,15 @@
 import getMockEvent from './mockEvents'
 
-let fakeDb = { players: [] }
+let fakeDb = { players: [], queue: [] }
 let userName = '123'
 let password = 'null'
-let fakePlayerNames = [userName, 'Callisto', 'Lotus', 'inS', 'sommie',]
+let fakePlayerNames = ['Andra Köhen', 'Första Köhen', userName, 'Callisto', 'Lotus', 'inS', 'sommie',]
 
 export function getAvailablePlayers() {
 	return fakeDbGetPlayers()
+}
+export function getQueue() {
+	return fakeDbGetQueue()
 }
 
 function randomName() {
@@ -16,9 +19,21 @@ function randomName() {
 export function addMeToList() {
 	fakeDbAddMe() // Replace with signup call to backend, backend should know who you are from token/something
 }
+export function addMeToWaitingList() {
+	fakeDbAddQueue()
+}
 
 export function fakeDbGetPlayers() {
 	return fakeDb.players // Replace with fetch call to backend returning the active list+events
+}
+
+export function fakeDbGetQueue() {
+	return fakeDb.queue
+}
+
+export function fakeDbAddQueue() {
+	let name = randomName()
+	fakeDb.queue.push(name)
 }
 
 export function fakeDbAddMe() {
@@ -31,7 +46,7 @@ export function getEvents() {
 }
 export function setUsername(user) {
 	userName = user
-	fakePlayerNames = [userName, 'Callisto', 'Lotus', 'inS', 'sommie',]
+	fakePlayerNames = ['Andra Köhen', 'Första Köhen', userName, 'Callisto', 'Lotus', 'inS', 'sommie',]
 
 }
 export function setPassword(pass) {
