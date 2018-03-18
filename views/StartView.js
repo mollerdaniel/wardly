@@ -1,17 +1,19 @@
 import React from 'react'
 import { Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import BackgroundImage from '../common/BackgroundImage/'
-import { getAvailablePlayers, addMeToList } from '../services/dataHandler'
+import { getAvailablePlayers, addMeToList, getQueue, addMeToWaitingList } from '../services/dataHandler'
 import ReadyCheck from '../common/ReadyCheck'
 import PlusAnimation from '../animations/PlusAnimation'
 import PlayerList from '../common/PlayerList'
+import QueueList from '../common/QueueList'
 
 export default class StartView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             count: 0,
-            names: []
+            names: [],
+            queue: []
         }
     }
 
@@ -21,7 +23,9 @@ export default class StartView extends React.Component {
 
     async addMeToList() {
         if (this.state.count >= 5) {
-            Alert.alert('Kön är full :D')
+            await addMeToWaitingList()
+            this.fetchData()
+            Alert.alert('Du hamnade på väntelistan')
         } else {
             await addMeToList()
             this.fetchData()
@@ -37,9 +41,12 @@ export default class StartView extends React.Component {
 
     async fetchData() {
         const players = await getAvailablePlayers()
+        const waitingPlayers = await getQueue()
         this.setState({
             count: players.length,
-            names: players
+            names: players,
+            queue: waitingPlayers
+
         })
     }
     onPress = () => {
@@ -54,17 +61,20 @@ export default class StartView extends React.Component {
         return (
             <BackgroundImage>
                 <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column'}}>
-                {/* Container for players & buttons */}
-                    <View style={{flex: 1}}/>
-                    
+                    {/* Container for players & buttons */}
+
 
                     <View style={{flex: 2}}>
                         <View style={styles.countContainer}>
-                            
+
                             <Text style={styles.countText}>
                                 {this.countPlayersMax(this.state.count)} / 5 players
                             </Text>
                             <PlayerList players={this.state.names} />
+                            <Text style={styles.waitingText}>
+                                Players in waiting List:
+                               </Text>
+                            <QueueList waitingPlayers={this.state.queue} />
                         </View>
                         <View style={{flex: 1}}>
                             <TouchableHighlight style={this.buttonStyle()} onPress={this.onPress}>
@@ -79,7 +89,7 @@ export default class StartView extends React.Component {
                             </TouchableHighlight>
                         </View>
                     </View>
-                    
+
 
                     <Image
                         source={require('../images/csgologo.png')}
@@ -145,7 +155,6 @@ const styles = StyleSheet.create({
     },
     countContainer: {
         flex: 1,
-        paddingBottom: 30,
         alignItems: 'center'
     },
     countText: {
@@ -154,6 +163,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0)',
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 30,
+        marginBottom: 20,
+        marginTop: 20,
+    },
+    waitingText: {
+        textAlign: 'center',
+        color: 'rgb(30,130,150)',
+        fontWeight: 'bold',
     }
 })
