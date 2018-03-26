@@ -51,6 +51,7 @@ function getPlayerList(eventId) {
 	if (!playerList) {
 		return [];
 	}
+	return playerList
 }
 
 // Write defaults to DB if empty
