@@ -9,8 +9,7 @@ export default class AuthView extends React.Component {
         console.log('url: ', event.url)
         let token = event.url.split('?token=')[1]
         console.log('token: ', token)
-        console.log(this.props.navigator);
-         
+        this.props.loginCallback(true, token)
     }
   }
 
