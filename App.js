@@ -6,7 +6,7 @@ import SettingsView from './views/SettingsView'
 import AuthView from './views/AuthView'
 import Swiper from 'react-native-swiper'
 import BackgroundImage from './common/BackgroundImage'
-//import { getUserName } from './services/discord'
+import { getUserName } from './services/discord'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -24,8 +24,8 @@ export default class App extends React.Component {
     console.log('state set, token: ', token)
   }
 
-  getMyUserName = () => {
-    const me = 'inS' //await getUserName(this.state.token)
+  getMyUserName = async () => {
+    const me = await getUserName(this.state.token)
     return me
   }
 

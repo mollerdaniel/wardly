@@ -6,8 +6,9 @@ export async function getUserName(token) {
         'Authorization': 'Bearer ' + token, 
         'Content-Type': 'application/x-www-form-urlencoded'
     })
-    return fetch(discordUrl + 'users/@me', { method: 'GET', headers: headers}).then((res) => {
-        console.log('data', res)
-        return 'inS'
-    })
+    return fetch(discordUrl + 'api/users/@me', { method: 'GET', headers: headers})
+            .then(response => response.json())
+            .then(json => {
+                return json.username
+            })
 }
