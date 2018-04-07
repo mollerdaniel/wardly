@@ -42,6 +42,8 @@ export default class StartView extends React.Component {
     async fetchData() {
         const players = await getAvailablePlayers()
         const me = await this.props.getMyUserName()
+        const avatar = await this.props.getAvatar()
+        console.log('avatar: ', avatar)
         const waitingPlayers = await getQueue()
         this.setState({
             count: players.length,

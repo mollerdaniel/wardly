@@ -6,7 +6,7 @@ import SettingsView from './views/SettingsView'
 import AuthView from './views/AuthView'
 import Swiper from 'react-native-swiper'
 import BackgroundImage from './common/BackgroundImage'
-import { getUserName } from './services/discord'
+import { getUserName, getAvatar } from './services/discord'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,6 +29,10 @@ export default class App extends React.Component {
     return me
   }
 
+  getAvatar = async () => {
+    return avatar = await getAvatar(this.state.token)
+  }
+
   logout = () => {
     this.setState({
       isLoggedIn: false
@@ -37,7 +41,7 @@ export default class App extends React.Component {
 
   showLoginView = () => {
     return (
-      this.state.isLoggedIn ? <StartView getMyUserName={this.getMyUserName} onPressFunction={this.choosePage}/> : <AuthView loginCallback={this.setLoginState}/>
+      this.state.isLoggedIn ? <StartView getAvatar={this.getAvatar} getMyUserName={this.getMyUserName} onPressFunction={this.choosePage}/> : <AuthView loginCallback={this.setLoginState}/>
     )
   }
 
