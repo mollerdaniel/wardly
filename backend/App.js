@@ -1,4 +1,15 @@
-let listen_port = 8080
+// Basic config
+let listen_port = 8080 // Port to listen to
+let service_fqdn = 'localhost:8080' // set to whatever your external endpoint is, include port if not 80 or 443
+let use_https = false // does the endpoint support https?
+
+// Setup variables
+const discord_client_id = process.env.CLIENT_ID || 'empty_client_id'
+const discord_client_secret = process.env.CLIENT_SECRET || 'empty_client_secret'
+const protocol = (use_https ? 'https' : 'http')
+const full_fqdn = protocol + '://' + service_fqdn
+const redirect = encodeURIComponent(full_fqdn + '/auth/discord/callback');
+
 // HTTP SERVER
 const express = require('express')
 const app = express()
@@ -74,6 +85,10 @@ function getPlayerList(eventId) {
 // Write defaults to DB if empty
 db.defaults({ events: [] })
 	.write()
+
+app.get('/auth/discord/login', (req, res) =>  {
+	res.redirect(`https://discordapp.com/oauth2/authorize?client_id=${discord_client_id}&scope=identify&response_type=code&redirect_uri=${redirect}`);
+});
 
 // GET /event
 app.get('/event', function (req, res) {
