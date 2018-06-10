@@ -129,6 +129,10 @@ function getEvent(eventId) {
         .value()
 }
 
+function checkId(shortidValue) {
+    return shortid.Value(shortidValue)
+}
+
 function getPlayerList(eventId) {
     let playerList = db
         .get('events')
@@ -141,8 +145,63 @@ function getPlayerList(eventId) {
     return playerList.playerList
 }
 
+function loginUser(discordToken) {
+    // Create new empty session
+    let session = createSession()
+    if (!shortid.isValid(session.id)) {
+        return {}
+    }
+    // store the discord-data in the session
+    let updateData = {
+        discordData: discordToken 
+    }
+
+    // save it in db
+    updateSession(session.id, updateData)
+    
+    // we DONT return all the discord data to the user, it's sensitive.. but we store it in the session
+    // we do return session_id for the app to store, we call our own token (session.id)
+    // appenToken (Ooooooh...)
+    return {
+        appenToken: session.id,
+    }
+}
+
+function getSession(sessionId) {
+    if (!shortid.isValid(sessionId)) {
+        console.log('An invalid sessionId was sent to the backend! OMG! haxx')
+        return {}
+    }
+    return db
+        .get('session')
+        .find({ id: sessionId })
+        .value()
+}
+
+function updateSession(sessionId, dataToUpdate) {
+    return db
+        .get('session')
+        .find({ id: sessionId })
+        .assign(dataToUpdate)
+        .write()
+        .id
+}
+
+function createSession() {
+    let newSessionId = shortid.generate()
+    let session = {
+        id: newSessionId,
+    }
+    db
+        .get('session')
+        .push(session)
+        .write()
+        .id
+    return getSession(newSessionId)
+}
+
 // Write defaults to DB if empty
-db.defaults({ events: [] })
+db.defaults({ events: [], session: [] })
     .write()
 
 // This endpoint should NOT require a valid logged in user (since it's used for the login)
@@ -153,9 +212,13 @@ app.get('/auth/discord/callback', catchAsync(async (req, res) => {
         console.log(code_from_discord + 'was invalid')
         return;
     }
-    let response = await discord_get_token_from_callback(code_from_discord, 'identify guilds')
+    let response = await discord_get_token_from_callback(code_from_discord, 'identify guilds') 
     console.log(response);
-    const data = { yay: true }
+    if (!response.access_token) {
+        res.send(def_response('Failed to login user via Discord'))
+        return
+    }
+    const data = loginUser(response)
     res.send(def_response(null, data))
 }));
 
