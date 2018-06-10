@@ -13,7 +13,8 @@ export default class StartView extends React.Component {
         this.state = {
             count: 0,
             names: [],
-            queue: []
+            queue: [],
+            userData: {},
         }
     }
 
@@ -41,16 +42,14 @@ export default class StartView extends React.Component {
 
     async fetchData() {
         const players = await getAvailablePlayers()
-        const me = await this.props.getMyUserName()
-        const avatar = await this.props.getAvatar()
-        console.log('avatar: ', avatar)
+        const userData = await this.props.getUserData()
+        console.log('userData: ', userData)
         const waitingPlayers = await getQueue()
         this.setState({
             count: players.length,
             names: players,
             queue: waitingPlayers,
-            username: me
-
+            userData: userData
         })
     }
     onPress = () => {
@@ -84,7 +83,7 @@ export default class StartView extends React.Component {
                             <TouchableHighlight style={this.buttonStyle()} onPress={this.onPress}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <PlusAnimation />
-                                    <Text style={styles.whiteText}> {this.state.username} 1 CS:GO</Text>
+                                    <Text style={styles.whiteText}> {this.state.userData.username} 1 CS:GO</Text>
                                 </View>
                             </TouchableHighlight>
 

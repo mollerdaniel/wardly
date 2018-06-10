@@ -5,7 +5,17 @@ const getHeaders = (token) => new Headers({
     'Content-Type': 'application/x-www-form-urlencoded'
 })
 
-export async function getUserName(token) {
+export default async function getUserData(token) {
+    console.log('getting user data...')
+    const userData = {
+        username: await getUserName(token),
+        avatar: await getAvatar(token),
+        guilds: await getGuilds(token)
+    };
+    return userData;
+}
+
+async function getUserName(token) {
     console.log('attempting to get user with token: ', token)
     const headers = getHeaders(token)
     return fetch(discordUrl + 'api/users/@me', { method: 'GET', headers: headers})
@@ -16,7 +26,7 @@ export async function getUserName(token) {
             })
 }
 
-export async function getAvatar(token) {
+async function getAvatar(token) {
     const headers = getHeaders(token)
     const baseAvatarUrl = 'https://cdn.discordapp.com/avatars'
 
@@ -25,4 +35,14 @@ export async function getAvatar(token) {
         .then(json => {
             return `${baseAvatarUrl}/${json.id}/${json.avatar}.png`
         })
+}
+
+async function getGuilds(token) {
+    const headers = getHeaders(token)
+    return fetch(discordUrl + 'api/users/@me/guilds', { method: 'GET', headers: headers})
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+                return json
+            })
 }
