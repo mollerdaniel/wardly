@@ -36,6 +36,25 @@ function getEvents() {
 		.value()
 }
 
+function removePlayer(nickname,eventId){
+
+	let oldPlayerList = getPlayerList(eventId)
+	let playerList = oldPlayerList.filter(playerName => playerName !== nickname )
+	console.log(playerList)
+	console.log('playerlist')
+	db
+		.get('events')
+		.find({ id: eventId })
+		.assign({ playerList })
+		.write()
+		.id
+
+	console.log('Updated playerlist:')
+	console.log(playerList)
+	
+	return
+}
+
 function isAdded(eventId, nickname) {
 	//let eventId = eventId
 	let numberOfOccurencesInList = db
@@ -277,4 +296,36 @@ app.post('/event/:eventId/add', function (req, res) {
 		return
 	}
 	res.send(def_response(null, { events: [eventFromDB] }))
+})
+app.post('/event/:eventId/remove', function (req, res) {
+	let eventId = req.params.eventId
+	let nickname = req.body.nickName
+	if (!eventId) {
+		res.send(def_response('missing id'))
+		return
+	}
+	if (!nickname) {
+		res.send(def_response('missing nickname'))
+		return
+	}
+	let event = getEvent(eventId);
+	if (!event) {
+		res.send(def_response('id was sent, but what is?!'))
+		return
+	}
+
+	if (!isAdded(eventId, nickname)) {
+		res.send(def_response('Player is not in this event'))
+		return
+	}
+	//WE DO NOT TRUST FRONTEND.
+removePlayer(nickname,eventId)
+let eventFromDB = getEvent(eventId);
+	if (!eventFromDB) {
+		res.send(def_response('data was accepted, but an error happened when we tried to store it. Many brokend backend :('))
+		return
+	}
+	res.send(def_response(null, { events: [eventFromDB] }))
+
 });
+
