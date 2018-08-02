@@ -1,7 +1,4 @@
 {
-  "expo": {
-    "sdkVersion": "22.0.0"
-  },
   "name": "wardly",
-  "displayName": "+1 csgo"
+  "displayName": "wardly"
 }
