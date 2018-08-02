@@ -3,9 +3,6 @@ import { View, Text, StyleSheet } from 'react-native'
 import CustomDatePicker from '../common/CustomDatePicker'
 import BackgroundImage from '../common/BackgroundImage'
 import { getEvents } from '../services/dataHandler'
-import SignUpAnimation from '../animations/SignUpAnimation'
-import SignedUpAnimation from '../animations/SignedUpAnimation'
-import NotSignedUpAnimation from '../animations/NotSignedUpAnimation'
 
 export default class EventView extends React.Component {
 
@@ -23,11 +20,11 @@ export default class EventView extends React.Component {
     getSignedUpIcon = (players) => {
         if(this.isPlayerInList(players)){
             return (
-                <SignedUpAnimation />
+                <Text>-</Text>
             )
         }
         return (
-            <NotSignedUpAnimation />
+            <Text>+</Text>
         )
     }
 

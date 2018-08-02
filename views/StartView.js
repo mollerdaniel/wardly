@@ -3,7 +3,6 @@ import { Alert, Button, Dimensions, Image, StyleSheet, Text, TouchableHighlight,
 import BackgroundImage from '../common/BackgroundImage/'
 import { getAvailablePlayers, addMeToList, getQueue, addMeToWaitingList } from '../services/dataHandler'
 import ReadyCheck from '../common/ReadyCheck'
-import PlusAnimation from '../animations/PlusAnimation'
 import PlayerList from '../common/PlayerList'
 import QueueList from '../common/QueueList'
 
@@ -82,7 +81,7 @@ export default class StartView extends React.Component {
                         <View style={{flex: 1}}>
                             <TouchableHighlight style={this.buttonStyle()} onPress={this.onPress}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <PlusAnimation />
+                                    <Text>+</Text>
                                     <Text style={styles.whiteText}> {this.state.userData.username} 1 CS:GO</Text>
                                 </View>
                             </TouchableHighlight>
