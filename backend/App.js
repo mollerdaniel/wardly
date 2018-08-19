@@ -49,6 +49,11 @@ async function discord_get_token_from_callback(code, scope) {
     return await http_post_discord('/oauth2/token', post_data)
 }
 
+async function http_get_discord(apiEndpoint, token) {
+    let url = discord_api_base + apiEndpoint
+    return await http_get(url, token)
+}
+
 async function http_post_discord(apiEndpoint, postData) {
     let url = discord_api_base + apiEndpoint
     return await http_post(postData, url);
@@ -64,6 +69,19 @@ async function http_post(postData, url) {
         },
     }
     const response = await fetch(url, postObject);
+    const json = await response.json();
+    return json
+}
+
+async function http_get(url, token) {
+    let getObject = {
+        method: 'GET',
+        headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': 'Bearer ' + token,
+        },
+    }
+    const response = await fetch(url, getObject);
     const json = await response.json();
     return json
 }
@@ -145,20 +163,17 @@ function getPlayerList(eventId) {
     return playerList.playerList
 }
 
-function loginUser(discordToken) {
+function loginUser(sessionData) {
     // Create new empty session
     let session = createSession()
     if (!shortid.isValid(session.id)) {
         return {}
     }
-    // store the discord-data in the session
-    let updateData = {
-        discordData: discordToken 
-    }
 
     // save it in db
-    updateSession(session.id, updateData)
-    
+    updateSession(session.id, sessionData)
+
+
     // we DONT return all the discord data to the user, it's sensitive.. but we store it in the session
     // we do return session_id for the app to store, we call our own token (session.id)
     // appenToken (Ooooooh...)
@@ -166,6 +181,21 @@ function loginUser(discordToken) {
         appenToken: session.id,
     }
 }
+
+function userIsLoggedIn(req, res) {
+    let sessionId = req.headers.appentoken;
+    if (!shortid.isValid(sessionId)) {
+        res.send(def_response('Invalid token (402)'))
+        return false
+    }
+    let session = getSession(sessionId);
+    if (!session) {
+        res.send(def_response('Invalid token (401)'))
+        return false
+    }
+    return true
+}
+
 
 function getSession(sessionId) {
     if (!shortid.isValid(sessionId)) {
@@ -212,13 +242,27 @@ app.get('/auth/discord/callback', catchAsync(async (req, res) => {
         console.log(code_from_discord + 'was invalid')
         return;
     }
-    let response = await discord_get_token_from_callback(code_from_discord, 'identify guilds') 
+    let response = await discord_get_token_from_callback(code_from_discord, 'identify guilds')
+
+    // Fetch some cool stuff from discord about the logged in user :P
+    let discordInfoAboutSelf = await http_get_discord('/users/@me', response.access_token)
+    console.log(discordInfoAboutSelf)
+    let discordGuildsSelf = await http_get_discord('/users/@me/guilds', response.access_token)
+    console.log(discordGuildsSelf)
+
     console.log(response);
     if (!response.access_token) {
         res.send(def_response('Failed to login user via Discord'))
         return
     }
-    const data = loginUser(response)
+    
+    let sessionData = {
+        discord: response,
+        discordUser: discordInfoAboutSelf,
+        discordGuilds: discordGuildsSelf
+    }
+
+    const data = loginUser(sessionData)
     res.send(def_response(null, data))
 }));
 
@@ -228,11 +272,13 @@ app.get('/auth/discord/login', (req, res) =>  {
 
 // GET /event
 app.get('/event', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     const data = { events: getEvents() }
     res.send(def_response(null, data))
 });
 
 app.get('/event/:eventId/details', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     let eventId = req.params.eventId
     if (!eventId) {
         res.send(def_response('missing id'))
@@ -252,6 +298,7 @@ app.get('/event/:eventId/details', function (req, res) {
 
 // TODO WIP
 app.post('/event/:eventId/signup', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     // this should be fetched from a session or credentials somehow
     //let tempvarname = req.query.name
 
@@ -270,6 +317,7 @@ app.post('/event/:eventId/signup', function (req, res) {
 });
 
 app.post('/event', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     if (!req.body.name) {
         res.send(def_response('missing name'))
         return;
@@ -314,6 +362,7 @@ app.post('/event', function (req, res) {
 });
 
 app.post('/event/:eventId/removeEvent', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     let eventId = req.params.eventId
     if (!eventId) {
         res.send(def_response('missing id'))
@@ -339,6 +388,7 @@ app.post('/event/:eventId/removeEvent', function (req, res) {
 
 
 app.post('/event/:eventId/updateTime', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     let eventId = req.params.eventId;
     var startDate = req.body.date_start;
     var endDate = req.body.date_end;
@@ -389,6 +439,7 @@ app.post('/event/:eventId/updateTime', function (req, res) {
 
 
 app.post('/event/:eventId/add', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     let eventId = req.params.eventId
     let nickname = req.body.nickName
     if (!eventId) {
@@ -430,6 +481,7 @@ app.post('/event/:eventId/add', function (req, res) {
     res.send(def_response(null, { events: [eventFromDB] }))
 })
 app.post('/event/:eventId/remove', function (req, res) {
+    if (!userIsLoggedIn(req, res)) { return false }
     let eventId = req.params.eventId
     let nickname = req.body.nickName
     if (!eventId) {
