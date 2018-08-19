@@ -1,6 +1,6 @@
 // Basic config
 let listen_port = 8080 // Port to listen to
-let service_fqdn = 'localhost:8080' // set to whatever your external endpoint is, include port if not 80 or 443
+let service_fqdn = process.env.SERVICE_FQDN || 'localhost:8080' // set to whatever your external endpoint is, include port if not 80 or 443
 let use_https = false // does the endpoint support https?
 
 // END of config

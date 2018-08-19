@@ -2,3 +2,4 @@
 # pushing a CLIENT_SECRET to github will force the subject to wear a funny hat for all eternity
 export CLIENT_ID=put the client id here
 export CLIENT_SECRET=put the client secret here
+export SERVICE_FQDN=localhost:8080
